@@ -20,7 +20,10 @@ class TemplateBackend(vanilla_django.TemplateBackend):
             template_suffix=None, template_dir=None, file_extension=None,
             extra_params=None, **kwargs):
 
-        config = getattr(settings, 'TEMPLATED_EMAIL_MANDRILL', {}).get(template_name, {})
+        base_config = getattr(settings, 'TEMPLATED_EMAIL_MANDRILL', {})
+        config = base_config.get('_default', {})
+        config.update(base_config.get(template_name, {}))
+
         parts = self._render_email(template_name, context,
                                    template_dir=template_prefix or template_dir,
                                    file_extension=template_suffix or file_extension)

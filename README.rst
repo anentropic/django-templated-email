@@ -214,12 +214,14 @@ And add the following to your settings.py::
 
     MAILCHIMP_API_KEY = 'yourapikey'
 
-    # For the django back-end specifically
+    # specify base defaults under _default, and overrides for each template
     TEMPLATED_EMAIL_MAILCHIMP = {
-        'welcome':{
-          'subject':'Welcome to my website',
+        '_default': {
           'track_opens':True,
           'track_clicks':False,
+        },
+        'welcome': {
+          'subject':'Welcome to my website',
           'tags':['my','little','pony'],
         }
     }
@@ -244,12 +246,14 @@ And add the following to your settings.py::
 
     MANDRILL_API_KEY = 'yourapikey'
 
-    # For the django back-end specifically
+    # specify base defaults under _default, and overrides for each template
     TEMPLATED_EMAIL_MANDRILL = {
-        'welcome':{
-          'subject':'Welcome to my website',
+        '_default': {
           'track_opens':True,
           'track_clicks':False,
+        },
+        'welcome':{
+          'subject':'Welcome to my website',
           'tags':['my','little','pony'],
         }
     }
