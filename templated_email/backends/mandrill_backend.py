@@ -32,11 +32,12 @@ class TemplateBackend(vanilla_django.TemplateBackend):
         config.update(base_config.get(template_name, {}))
 
         message = config.copy()
-        message.update({
-            'from_name': ' '.join(from_email.split(' ')[:-1]) or 'Nobody',
-            'from_email': from_email,
-            'to': recipient_list,
-        })
+        message['to'] = recipient_list
+        if from_email::
+            message.update({
+                'from_name': ' '.join(from_email.split(' ')[:-1]) or 'Nobody',
+                'from_email': from_email,
+            })
         if 'message' not in context:
             context['message'] = message
 
