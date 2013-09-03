@@ -18,7 +18,7 @@ class TemplateBackend(vanilla_django.TemplateBackend):
     def send(self, template_name, from_email, recipient_list, context, cc=None,
             bcc=None, fail_silently=False, headers=None, template_prefix=None,
             template_suffix=None, template_dir=None, file_extension=None,
-            extra_params=None, **kwargs):
+            extra_params=None, dry_run=False, **kwargs):
 
         # some internal basic defaults
         config = {
@@ -44,8 +44,8 @@ class TemplateBackend(vanilla_django.TemplateBackend):
                                    template_dir=template_prefix or template_dir,
                                    file_extension=template_suffix or file_extension)
 
-        message['html'] = parts.get('html', ''),
-        message['text'] = parts.get('plain', ''),
+        message['html'] = parts.get('html', '')
+        message['text'] = parts.get('plain', '')
         if cc:
             message['cc_address'] = ', '.join(cc)
         if bcc:
@@ -55,8 +55,8 @@ class TemplateBackend(vanilla_django.TemplateBackend):
         if extra_params:
             message.update(extra_params)
 
-        log.debug(message)
-
+        if dry_run:
+            return
         try:
             return self.client.messages.send(message=message, **kwargs)
         except mandrill.Error as e:
