@@ -33,7 +33,7 @@ class TemplateBackend(vanilla_django.TemplateBackend):
 
         message = config.copy()
         message['to'] = recipient_list
-        if from_email::
+        if from_email:
             message.update({
                 'from_name': ' '.join(from_email.split(' ')[:-1]) or 'Nobody',
                 'from_email': from_email,
