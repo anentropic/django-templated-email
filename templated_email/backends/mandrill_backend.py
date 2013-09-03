@@ -22,7 +22,7 @@ class TemplateBackend(vanilla_django.TemplateBackend):
 
         # some internal basic defaults
         config = {
-            'subject': _('%s email subject' % template_name),
+            'subject': _('%s email' % template_name),
         }
 
         base_config = getattr(settings, 'TEMPLATED_EMAIL_MANDRILL', {})
@@ -55,8 +55,10 @@ class TemplateBackend(vanilla_django.TemplateBackend):
         if extra_params:
             message.update(extra_params)
 
+        log.debug(message)
+
         try:
-            self.client.messages.send(message=message, **kwargs)
+            return self.client.messages.send(message=message, **kwargs)
         except mandrill.Error as e:
             log.error(e)
             if not fail_silently:
