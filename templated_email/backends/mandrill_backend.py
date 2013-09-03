@@ -26,9 +26,9 @@ class TemplateBackend(vanilla_django.TemplateBackend):
         }
 
         base_config = getattr(settings, 'TEMPLATED_EMAIL_MANDRILL', {})
-        # get general message defaults from settings:
+        # get general message defaults from settings:
         config.update(base_config.get('_default', {}))
-        # get template-specific message defaults from settings:
+        # get template-specific message defaults from settings:
         config.update(base_config.get(template_name, {}))
 
         message = config.copy()
