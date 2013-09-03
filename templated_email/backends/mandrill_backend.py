@@ -51,7 +51,7 @@ class TemplateBackend(vanilla_django.TemplateBackend):
         if bcc:
             message['bcc_address'] = ', '.join(bcc)
         if headers:
-            message['headers']: headers
+            message['headers'] = headers
         if extra_params:
             message.update(extra_params)
 
